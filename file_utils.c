@@ -5,58 +5,54 @@
 
 #include "file_utils.h"
 
-
-
-
-
-
-char *getFileContents(const char *filePath) {
-
-
-FILE *file = fopen(filePath, "r");
-char* str = (char*) malloc(sizeof(double)*1000);
-int current = fgetc(file);
-int i=0;
+char* getFileContents(const char* filePath) {
+  //opens file
+  FILE* file = fopen(filePath, "r");
+  //delcares str
+  char* str = (char*)malloc(sizeof(double) * 1000);
+  //gets current
+  int current = fgetc(file);
+  int i = 0;
+  //loops through each carrecter and appends it to the end of str
   while ((char)current != EOF) {
     str[i] = (char)current;
     current = fgetc(file);
     i++;
   }
-fclose(file);
-return str;
+  fclose(file);
+  return str;
 }
 
-
-char **getFileLines(const char *filePath, int *numLines) {
-
-
-  FILE *file = fopen(filePath, "r");
+char** getFileLines(const char* filePath, int* numLines) {
+  //opens file and declares buffer
+  FILE* file = fopen(filePath, "r");
   char buffer[1000];
   *numLines = 0;
-
-
-char current = fgetc(file);
+  //finds number of lines
+  char current = fgetc(file);
   while (current != EOF) {
     current = fgetc(file);
     if (current == '\n') {
-    (*numLines)++;
-  }
-}
-fclose(file);
-file = fopen(filePath, "r");
-int i;
-  char** lines=(char**) malloc(sizeof(char*) * (*numLines));
-  for(i=0; i < *numLines; i++) {
-    lines[i]=(char*) malloc(sizeof(char)*1000);
-  }
-i=0;
-    while (fgets(buffer, 1000, file) != NULL) {
-      int n = strlen(buffer);
-      buffer [n-1] = '\0';
-      strcpy(lines[i], buffer);
-      i++;
+      (*numLines)++;
     }
+  }
+  //reopens the file
+  fclose(file);
+  file = fopen(filePath, "r");
+  int i;
+  //declares a 2d array
+  char** lines = (char**)malloc(sizeof(char*) * (*numLines));
+  for (i = 0; i < *numLines; i++) {
+    lines[i] = (char*)malloc(sizeof(char) * 1000);
+  }
+  i = 0;
+  //puts every line into one pointer of the 2d array
+  while (fgets(buffer, 1000, file) != NULL) {
+    int n = strlen(buffer);
+    buffer[n - 1] = '\0';
+    strcpy(lines[i], buffer);
+    i++;
+  }
   fclose(file);
   return lines;
-
-  }
+}
