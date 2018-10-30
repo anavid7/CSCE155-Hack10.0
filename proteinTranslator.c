@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 
 
-#include "protein_util.h"
+#include "protein_utils.h"
 
 
 char* getFileContents(const char* filePath) {
@@ -38,8 +39,8 @@ int sequenceLength = strlen(sequence);
 
 int i;
 //converts DNA to RNA
-for (i=0; i<n-1; i++) {
-  if (sequence[i] == 'T' {
+for (i=0; i<sequenceLength-1; i++) {
+  if (sequence[i] == 'T') {
     sequence[i] = 'U';
   }
 }
@@ -49,19 +50,21 @@ int x = 0;
 for (i=0; i<sequenceLength; i++) {
   if (!isspace(sequence[i])) {
     sequence[x] = sequence[i];
-    x++
+    x++;
   }
 }
 //opens file
 FILE *file = fopen(argv[3],"w");
 i = 0;
+int n;
 //makes a trigram
 while (sequence[i] != '\0') {
   char trigram[3];
     for (n=0; n<3; n++) {
       trigram[n] = sequence[i];
     }
-  fprintf(file, trigram)
-  i++
+    //prints output to file
+  fprintf(file, trigram);
+  i++;
   }
 }
